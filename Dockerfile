@@ -12,6 +12,10 @@ ENV AWS_BUCKET **None**
 
 ENV PREFIX **None**
 
+RUN apk add tzdata
+RUN cp /usr/share/zoneinfo/Asia/Singapore /etc/localtime
+RUN echo "Asia/Singapore" > /etc/timezone
+
 ADD run.sh /run.sh
 RUN chmod +x /run.sh
 
