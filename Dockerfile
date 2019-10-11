@@ -1,6 +1,6 @@
-FROM postgres:alpine
+FROM alpine
 
-RUN apk update && apk add py-pip
+RUN apk update && apk add py-pip postgresql-client
 RUN pip install awscli --upgrade
 
 ENV PGDUMP_OPTIONS -Fc --no-acl --no-owner
@@ -16,7 +16,7 @@ RUN apk add tzdata
 RUN cp /usr/share/zoneinfo/Asia/Singapore /etc/localtime
 RUN echo "Asia/Singapore" > /etc/timezone
 
-ADD run.sh /run.sh
-RUN chmod +x /run.sh
+ADD run.sh run.sh
+RUN sed -i 's/\r$//' run.sh && chmod +x run.sh
 
-CMD ["/run.sh"]
+CMD ["/bin/sh", "run.sh"]
